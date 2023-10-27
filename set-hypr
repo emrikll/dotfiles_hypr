@@ -126,7 +126,7 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
 
     #Stage 1
     echo -e "\n$CNT - Stage 1 - Installing main components, this may take a while..."
-    for SOFTWR in hyprland kitty waybar swww swaylock-effects wofi wlogout mako xdg-desktop-portal-hyprland swappy grim slurp thunar
+    for SOFTWR in hyprland kitty waybar swww swaylock-effects sway-audio-idle-inhibit-git wofi wlogout mako xdg-desktop-portal-hyprland swappy grim slurp thunar
     do
         #First lets see if the package is there
         if yay -Qs $SOFTWR > /dev/null ; then
@@ -181,6 +181,43 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
         fi
     done
 
+    #Stage 4
+    echo -e "\n$CNT - Stage 4 - Installing additional packages from pacman"
+    for SOFTWR in texlive zathura zathura-cd zathura-pdf-mupdf zathura-djvu zathura-ps alacritty rofi discord pfetch lolcat fish swayidle firefox kinit
+    do
+        #First lets see if the package is there
+        if pacman -Qs $SOFTWR > /dev/null ; then
+            echo -e "$COK - $SOFTWR is already installed."
+        else
+            echo -e "$CNT - Now installing $SOFTWR ..."
+            sudo pacman -S --noconfirm $SOFTWR &>> $INSTLOG
+            if pacman -Qs $SOFTWR > /dev/null ; then
+                echo -e "$COK - $SOFTWR was installed."
+            else
+                echo -e "$CER - $SOFTWR install had failed, please check the install.log"
+                exit
+            fi
+        fi
+    done
+    
+    #Stage 5
+    echo -e "\n$CNT - Stage 5 - Installing additional packages from yay"
+    for SOFTWR in slack-desktop otf-font-awesome otf-font-awesome-5 mullvad-vpn-bin
+    do
+        #First lets see if the package is there
+        if yay -Qs $SOFTWR > /dev/null ; then
+            echo -e "$COK - $SOFTWR is already installed."
+        else
+            echo -e "$CNT - Now installing $SOFTWR ..."
+            yay -S --noconfirm $SOFTWR &>> $INSTLOG
+            if yay -Qs $SOFTWR > /dev/null ; then
+                echo -e "$COK - $SOFTWR was installed."
+            else
+                echo -e "$CER - $SOFTWR install had failed, please check the install.log"
+                exit
+            fi
+        fi
+
     # Start the bluetooth service
     echo -e "$CNT - Starting the Bluetooth Service..."
     sudo systemctl enable --now bluetooth.service &>> $INSTLOG
@@ -200,7 +237,7 @@ fi
 read -n1 -rep $'[\e[1;33mACTION\e[0m] - Would you like to copy config files? (y,n) ' CFG
 if [[ $CFG == "Y" || $CFG == "y" ]]; then
     echo -e "$CNT - Copying config files..."
-    for DIR in hypr kitty mako swaylock waybar wlogout wofi 
+      for DIR in hypr kitty mako swaylock waybar wlogout wofi rofi alacritty fish nvim swaylock 
     do 
         DIRPATH=~/.config/$DIR
         if [ -d "$DIRPATH" ]; then 
@@ -208,8 +245,8 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
             mv $DIRPATH $DIRPATH-back &>> $INSTLOG
             echo -e "$COK - Backed up $DIR to $DIRPATH-back."
         fi
-        echo -e "$CNT - Copying $DIR config to $DIRPATH."  
-        cp -R $DIR ~/.config/ &>> $INSTLOG
+        echo -e "$CNT - Symlinking $DIR config to $DIRPATH."  
+        ln -s $PWD/$DIR ~/.config/ &>> $INSTLOG
     done
 
     # Set some files as exacutable
@@ -219,6 +256,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     chmod +x ~/.config/waybar/scripts/waybar-wttr.py
     chmod +x ~/.config/waybar/scripts/baraction
     chmod +x ~/.config/waybar/scripts/update-sys
+    chmod +x ~/.config/hypr/scripts/sleep.sh
 
     # Copy the SDDM theme
     echo -e "$CNT - Setting up the login screen."

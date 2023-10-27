@@ -1,0 +1,1 @@
+-no-config -no-lazy-grab -show drun -modi drun -theme "/usr/share/rofi/themes/gruvbox-dark-hard.rasi"

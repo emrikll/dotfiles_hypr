@@ -59,6 +59,7 @@ tooltip label{
 #custom-power_btn,
 #custom-power_profile,
 #custom-weather,
+#language,
 #window,
 #cpu,
 #disk,
@@ -80,7 +81,7 @@ tooltip label{
     border: 0px;
 }
 
-#tray, #custom-lock_screen, #temperature, #backlight, #custom-launch_wofi, #cpu {
+#tray, #custom-lock_screen, #temperature, #language, #custom-launch_wofi, #cpu {
     border-radius: 10px 0px 0px 10px;
 }
 

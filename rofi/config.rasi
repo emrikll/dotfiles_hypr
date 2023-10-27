@@ -1,0 +1,8 @@
+configuration {
+  modi: "run,pdf:~/.config/rofi/pdfs.sh,ssh";
+  show-icons: true;
+  icon-theme:"Papirus";
+  }
+
+
+
