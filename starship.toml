@@ -13,7 +13,7 @@ error_symbol = "[x](bold red)"
 [username]
 style_user = "green bold"
 style_root = "black bold"
-format = " [$user]($style)   "
+format = " [$user]($style) 🐢  "
 disabled = false
 show_always = true
 
@@ -92,7 +92,10 @@ charging_symbol = ""
 #discharging_symbol = ""
 
 #[docker]
-#symbol = " "
+#symbol = "🐳 "
+[docker_context]
+#format = 'via [🐋 $context](blue bold)'
+symbol = "🐳 "
 
 [conda]
 symbol = " "
@@ -101,7 +104,7 @@ symbol = " "
 symbol = " "
 
 [package] 
-symbol = " "
+symbol = "📦 "
 
 [perl]
 symbol = " "
@@ -116,10 +119,10 @@ symbol = " "
 symbol = " "
 
 [rust]
-symbol = " "
+symbol = "🦀 "
 
 [swift]
-symbol = "ﯣ "
+symbol = "🦅 "
 
 [golang]
 symbol = " "

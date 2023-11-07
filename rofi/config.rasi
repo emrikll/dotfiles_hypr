@@ -3,6 +3,6 @@ configuration {
   show-icons: true;
   icon-theme:"Papirus";
   }
-
+@import "style/style-dark.rasi"
 
 

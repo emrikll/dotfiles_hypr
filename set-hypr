@@ -183,7 +183,7 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
 
     #Stage 4
     echo -e "\n$CNT - Stage 4 - Installing additional packages from pacman"
-    for SOFTWR in texlive zathura zathura-cd zathura-pdf-mupdf zathura-djvu zathura-ps alacritty rofi discord pfetch lolcat fish swayidle firefox kinit
+    for SOFTWR in texlive zathura zathura-cd zathura-pdf-mupdf zathura-djvu zathura-ps alacritty rofi discord pfetch lolcat fish swayidle firefox kinit noto-fonts-emoji
     do
         #First lets see if the package is there
         if pacman -Qs $SOFTWR > /dev/null ; then
