@@ -7,7 +7,7 @@ if [ "$#" -eq 0 ] ; then
   done
   unset IFS; set +f
 else
-  swaymsg exec "zathura ~/pdfs/$1.pdf" &>/dev/null
+    hyprctl dispatch exec "zathura ~/pdfs/$1.pdf" &>/dev/null
 fi
 
 exit 0
