@@ -12,7 +12,8 @@
     fg0:    #E6E6E6;
     fg1:    #FFFFFF;
     fg2:    #969696;
-    fg3:    #3D3D3D;
+    /*fg3:    #3D3D3D;*/
+    fg3:    #CDD6F4;
 }
 
 @import "style-common.rasi"

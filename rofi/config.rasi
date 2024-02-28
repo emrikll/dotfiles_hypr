@@ -1,8 +1,9 @@
 configuration {
-  modi: "run,pdf:~/.config/rofi/pdfs.sh,ssh";
+  modi: "run,pdf:~/.config/rofi/pdfs.sh,calc,ssh";
   show-icons: true;
   icon-theme:"Papirus";
   }
-@import "style/style-dark.rasi"
 
+/*@theme "/home/emrik/.local/share/rofi/themes/nord.rasi"*/
 
+@theme "./style/style-dark.rasi"
