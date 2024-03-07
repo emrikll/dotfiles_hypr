@@ -217,6 +217,7 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
                 exit
             fi
         fi
+    done
 
     # Start the bluetooth service
     echo -e "$CNT - Starting the Bluetooth Service..."
