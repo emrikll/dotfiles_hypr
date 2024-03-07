@@ -202,7 +202,7 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
     
     #Stage 5
     echo -e "\n$CNT - Stage 5 - Installing additional packages from yay"
-    for SOFTWR in slack-desktop otf-font-awesome otf-font-awesome-5 mullvad-vpn-bin
+    for SOFTWR in slack-desktop otf-font-awesome otf-font-awesome-5 mullvad-vpn-bin pfetch
     do
         #First lets see if the package is there
         if yay -Qs $SOFTWR > /dev/null ; then
