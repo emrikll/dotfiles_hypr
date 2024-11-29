@@ -39,12 +39,12 @@ nvidia_stage=(
 
 #the main packages
 install_stage=(
-    kitty 
+    alacritty 
     mako 
     waybar
     swww 
     swaylock-effects 
-    wofi 
+    rofi
     wlogout 
     xdg-desktop-portal-hyprland 
     swappy 
@@ -73,6 +73,8 @@ install_stage=(
     xfce4-settings
     nwg-look-bin
     sddm
+    hyprlock
+    hypridle 
 )
 
 for str in ${myArray[@]}; do
