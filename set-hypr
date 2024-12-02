@@ -211,6 +211,36 @@ fi
 
 
 
+### Disable wifi powersave mode ###
+read -n1 -rep $'[\e[1;33mACTION\e[0m] - Would you like to install support for Nvidia (can break stuff)? (y,n) ' NVIDIA
+if [[ $NVIDIA == "Y" || $NVIDIA == "y" ]]; then
+    #Stage Nvidia
+    echo -e "\n$CNT - Stage Nvidia - Installing components for nvidia, this may take a while..."
+    for SOFTWR in linux-headers nvidia-dkms nvidia-settings libva libva-nvidia-driver-git
+    do
+        #First lets see if the package is there
+        if yay -Qs $SOFTWR > /dev/null ; then
+            echo -e "$COK - $SOFTWR is already installed."
+        else
+            echo -e "$CNT - Now installing $SOFTWR ..."
+            yay -S --noconfirm $SOFTWR &>> $INSTLOG
+            if yay -Qs $SOFTWR > /dev/null ; then
+                echo -e "$COK - $SOFTWR was installed."
+            else
+                echo -e "$CER - $SOFTWR install had failed, please check the install.log"
+                exit
+            fi
+        fi
+    done
+
+    echo -e "\n$CNT - Stage Nvidia - Installing components for nvidia done."
+    # update config
+    sudo sed -i 's/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
+    sudo mkinitcpio --config /etc/mkinitcpio.conf --generate /boot/initramfs-custom.img
+    echo -e "options nvidia-drm modeset=1" | sudo tee -a /etc/modprobe.d/nvidia.conf &>> $INSTLOG
+
+fi
+
 ### Install all of the above pacakges ####
 read -rep $'[\e[1;33mACTION\e[0m] - Would you like to install the packages? (y,n) ' INST
 if [[ $INST == "Y" || $INST == "y" ]]; then

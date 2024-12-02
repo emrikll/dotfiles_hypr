@@ -1,0 +1,6 @@
+#upgrade script
+echo "Upgrading packages with PACMAN🚀"
+sudo pacman -Syu
+
+echo "Upgrading (only) AUR packages with PARU🐶" 
+paru -Sua
