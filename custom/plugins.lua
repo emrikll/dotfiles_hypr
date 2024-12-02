@@ -58,6 +58,19 @@ local plugins = {
       require('rust-tools').setup(opts)
     end
   },
+  {
+    "iamcco/markdown-preview.nvim",
+    ft = "markdown",
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+      vim.g.mkdp_theme = 'dark'
+      vim.g.mkdp_browser = 'chromium'
+    end,
+  }
+
   -- To make a plugin not be loaded
   -- {
   --   "NvChad/nvim-colorizer.lua",
