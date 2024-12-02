@@ -1,0 +1,27 @@
+#!/bin/sh
+
+while getopts ':p:h' opt; do
+  case "$opt" in
+    p)
+      arg="$OPTARG"
+      path=$arg
+      ;;
+    h)
+      echo -e "Usage: $(basename $0) [-p path]"
+      exit 1
+      ;;
+    :)
+      echo -e "option requires an argument.\nUsage: $(basename $0) [-p path]"
+      exit 1
+      ;;
+
+    ?)
+      echo -e "Invalid command option.\nUsage: $(basename $0) [-p path]"
+      exit 1
+      ;;
+  esac
+done
+shift "$(($OPTIND -1))"
+
+echo "Recursivly scanning: $path"
+clamscan --verbose --recursive --infected $path

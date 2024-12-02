@@ -43,8 +43,8 @@ install_stage=(
     mako 
     waybar
     swww 
-    swaylock-effects 
     rofi
+    cliphist
     wlogout 
     xdg-desktop-portal-hyprland 
     swappy 
@@ -75,6 +75,17 @@ install_stage=(
     sddm
     hyprlock
     hypridle 
+    zathura
+    sdt
+    neovim
+    fish
+    spotify-launcher
+    discord
+    mullvad-vpn-bin
+    notion
+    bitwarden
+    gedit
+    clamav
 )
 
 for str in ${myArray[@]}; do
@@ -107,15 +118,15 @@ show_progress() {
 # function that will test for a package and if not found it will attempt to install it
 install_software() {
     # First lets see if the package is there
-    if yay -Q $1 &>> /dev/null ; then
+    if paru -Q $1 &>> /dev/null ; then
         echo -e "$COK - $1 is already installed."
     else
         # no package found so installing
         echo -en "$CNT - Now installing $1 ."
-        yay -S --noconfirm $1 &>> $INSTLOG &
+        paru -S --noconfirm $1 &>> $INSTLOG &
         show_progress $!
         # test to make sure package installed
-        if yay -Q $1 &>> /dev/null ; then
+        if paru -Q $1 &>> /dev/null ; then
             echo -e "\e[1A\e[K$COK - $1 was installed."
         else
             # if this is hit then a package is missing, exit to review log
@@ -187,24 +198,24 @@ if [[ $WIFI == "Y" || $WIFI == "y" ]]; then
 fi
 
 #### Check for package manager ####
-if [ ! -f /sbin/yay ]; then  
-    echo -en "$CNT - Configuering yay."
-    git clone https://aur.archlinux.org/yay.git &>> $INSTLOG
-    cd yay
+if [ ! -f /sbin/paru ]; then  
+    echo -en "$CNT - Configuering paru."
+    git clone https://aur.archlinux.org/paru.git &>> $INSTLOG
+    cd paru
     makepkg -si --noconfirm &>> ../$INSTLOG &
     show_progress $!
-    if [ -f /sbin/yay ]; then
-        echo -e "\e[1A\e[K$COK - yay configured"
+    if [ -f /sbin/paru ]; then
+        echo -e "\e[1A\e[K$COK - paru configured"
         cd ..
         
-        # update the yay database
-        echo -en "$CNT - Updating yay."
-        yay -Suy --noconfirm &>> $INSTLOG &
+        # update the paru database
+        echo -en "$CNT - Updating paru."
+        paru -Suy --noconfirm &>> $INSTLOG &
         show_progress $!
-        echo -e "\e[1A\e[K$COK - yay updated."
+        echo -e "\e[1A\e[K$COK - paru updated."
     else
         # if this is hit then a package is missing, exit to review log
-        echo -e "\e[1A\e[K$CER - yay install failed, please check the install.log"
+        echo -e "\e[1A\e[K$CER - paru install failed, please check the install.log"
         exit
     fi
 fi
@@ -219,12 +230,12 @@ if [[ $NVIDIA == "Y" || $NVIDIA == "y" ]]; then
     for SOFTWR in linux-headers nvidia-dkms nvidia-settings libva libva-nvidia-driver-git
     do
         #First lets see if the package is there
-        if yay -Qs $SOFTWR > /dev/null ; then
+        if paru -Qs $SOFTWR > /dev/null ; then
             echo -e "$COK - $SOFTWR is already installed."
         else
             echo -e "$CNT - Now installing $SOFTWR ..."
-            yay -S --noconfirm $SOFTWR &>> $INSTLOG
-            if yay -Qs $SOFTWR > /dev/null ; then
+            paru -S --noconfirm $SOFTWR &>> $INSTLOG
+            if paru -Qs $SOFTWR > /dev/null ; then
                 echo -e "$COK - $SOFTWR was installed."
             else
                 echo -e "$CER - $SOFTWR install had failed, please check the install.log"
@@ -286,7 +297,7 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
     
     # Clean out other portals
     echo -e "$CNT - Cleaning out conflicting xdg portals..."
-    yay -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk &>> $INSTLOG
+    paru -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk &>> $INSTLOG
 fi
 
 ### Copy Config Files ###
